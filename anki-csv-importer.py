@@ -16,27 +16,46 @@ DELIMITER = '\t'
 
 import csv
 import genanki
+import random
 
 # Define the model for Anki cards
-model_id = 1234567890  # Change this to your desired model ID
-model_name = 'Basic'
+model_id = random.randrange(1 << 30, 1 << 31)  # Change this to your desired model ID
+model_name = 'HSK'
+# model_fields = [
+#     {'name': 'Question'},
+#     {'name': 'Answer'}
+# ]
 model_fields = [
-    {'name': 'Question'},
-    {'name': 'Answer'}
+    {'name': 'Hanzi'},
+    {'name': 'Pinyin'}
 ]
 model_templates = [
     {
         'name': 'Card 1',
-        'qfmt': '{{Question}}',
-        'afmt': '{{FrontSide}}<hr id="answer">{{Answer}}',
+        'qfmt': '{{Hanzi}}',
+        'afmt': '{{FrontSide}}<hr id="answer">{{Pinyin}}',
     },
 ]
+style = """
+.card {
+ font-family: "Sans Forgetica", arial, serif;
+ font-size: 80px;
+ text-align: center;
+ color: black;
+ background-color: white;
+}
+.hanzi {
+ font-size: 200px;
+ font-family: arial, serif;
+}
+"""
 
 anki_model = genanki.Model(
     model_id,
     model_name,
     fields=model_fields,
-    templates=model_templates
+    templates=model_templates,
+    css=style
 )
 
 # Define a function to read CSV file and create Anki notes
@@ -61,6 +80,7 @@ def create_deck(csv_file, deck_name):
     notes = create_notes(csv_file)
     for note in notes:
         anki_deck.add_note(note)
+    print("Created deck with {} flashcards".format(len(anki_deck.notes)))
     return anki_deck
 
 # Define the main function
