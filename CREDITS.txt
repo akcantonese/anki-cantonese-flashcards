@@ -1,0 +1,18 @@
+# Credits
+
+* 陳老師 and others at CCSF for instilling a love for Chinese languages in me.
+* 廣場跳舞在舊金山的唐人街
+
+# Software
+
+* Anki flashcard software: https://apps.ankiweb.net/
+* Audacity audio editing software: https://www.audacityteam.org/
+* Firefox browser: https://www.mozilla.org/en-US/firefox/
+* GenAnki library for generating Anki decks: https://github.com/kerrickstaley/genanki
+* GNU/Linux Operating System: https://www.gnu.org/gnu/linux-and-gnu.en.html
+* MeldMerge visual comparison tool: https://meldmerge.org/
+* Python programming language: https://www.python.org/
+* Sans Forgetica font from RMIT: https://www.1001fonts.com/sans-forgetica-font.html
+* XFCE desktop environment: https://www.xfce.org/
+* Xubuntu Operating System: https://xubuntu.org/
+* VIM text editor: https://www.vim.org/
