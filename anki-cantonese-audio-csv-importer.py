@@ -26,7 +26,8 @@ CardData = namedtuple('CardData',
      'english_pronunciation_audio_file_name', # if you use the full path for the media, it won’t load (even if the media exists at the provided absolute path)
      'cantonese_pronunciation_audio_file_name', # if you use the full path for the media, it won’t load (even if the media exists at the provided absolute path)
      'characters',
-     'jyutping'])
+     'jyutping',
+     'yale'])
 
 # Define the model for Anki cards
 model_id = random.randrange(1 << 30, 1 << 31)  # Change this to your desired model ID
@@ -42,13 +43,14 @@ model_fields = [
     {'name': 'EnglishPronunciationAudioFileName'},
     {'name': 'CantonesePronunciationAudioFileName'},
     {'name': 'Characters'},
-    {'name': 'Jyutping'}
+    {'name': 'Jyutping'},
+    {'name': 'Yale'}
 ]
 model_templates = [
     {
         'name': 'Card 1',
         'qfmt': '{{EnglishPronunciationAudioFileName}}{{EnglishPhrase}}',
-        'afmt': '{{FrontSide}}<hr id="answer">{{CantonesePronunciationAudioFileName}}{{Characters}}<br/>{{Jyutping}}',
+        'afmt': '{{FrontSide}}<hr id="answer">{{CantonesePronunciationAudioFileName}}{{Characters}}<br/>{{Jyutping}}<br/>{{Yale}}',
     },
 ]
 
@@ -94,8 +96,9 @@ def create_card_data_list(csv_file):
             cantonese_pronunciation_audio_file_name = row[2]
             characters = row[3]
             jyutping = row[4]
+            yale = row[5]
             card_data_list.append(CardData(english_phrase=english_phrase, english_pronunciation_audio_file_name=english_pronunciation_audio_file_name,
-                cantonese_pronunciation_audio_file_name=cantonese_pronunciation_audio_file_name, characters=characters, jyutping=jyutping))
+                cantonese_pronunciation_audio_file_name=cantonese_pronunciation_audio_file_name, characters=characters, jyutping=jyutping, yale=yale))
     return card_data_list
 
 
@@ -114,7 +117,7 @@ def create_notes(card_data_list):
         note = genanki.Note(
             model=anki_model,
             fields=[card_data.english_phrase, generate_english_audio_file_reference(card_data),
-                generate_cantonese_audio_file_reference(card_data), card_data.characters, card_data.jyutping]
+                generate_cantonese_audio_file_reference(card_data), card_data.characters, card_data.jyutping, card_data.yale]
         )
         notes.append(note)
     return notes
