@@ -6,9 +6,10 @@
 # pip3 install genanki
 
 DECK_NAME = 'Basic Cantonese Phrases'
-AUDIO_DIRECTORY = 'cantonese-audio/'
+CANTONESE_AUDIO_DIRECTORY = 'cantonese-audio/'
+ENGLISH_AUDIO_DIRECTORY = 'english-audio/'
 # Change this to the path of your CSV file
-INPUT_CSV_NAME = 'basic-cantonese-phrases.csv'
+INPUT_CSV_NAME = 'basic-english-cantonese-phrases.csv'
 # Change this to your desired deck name
 OUTPUT_APKG_NAME = '{}.apkg'.format(DECK_NAME).replace(" ", "_")
 # Character which separates the question from the answer within a row
@@ -21,8 +22,9 @@ import random
 from collections import namedtuple
 
 CardData = namedtuple('CardData',
-    ['phrase',
-     'pronunciation_audio_file_name', # if you use the full path for the media, it won’t load (even if the media exists at the provided absolute path)
+    ['english_phrase',
+     'english_pronunciation_audio_file_name', # if you use the full path for the media, it won’t load (even if the media exists at the provided absolute path)
+     'cantonese_pronunciation_audio_file_name', # if you use the full path for the media, it won’t load (even if the media exists at the provided absolute path)
      'characters',
      'jyutping'])
 
@@ -36,16 +38,17 @@ model_name = 'Cantonese'
 
 # Note: only put the filename (aka basename) and not the full path in the PronunciationAudioFileName field
 model_fields = [
-    {'name': 'Phrase'},
-    {'name': 'PronunciationAudioFileName'},
+    {'name': 'EnglishPhrase'},
+    {'name': 'EnglishPronunciationAudioFileName'},
+    {'name': 'CantonesePronunciationAudioFileName'},
     {'name': 'Characters'},
     {'name': 'Jyutping'}
 ]
 model_templates = [
     {
         'name': 'Card 1',
-        'qfmt': '{{Phrase}}',
-        'afmt': '{{FrontSide}}<hr id="answer">{{PronunciationAudioFileName}}{{Characters}}{{Jyutping}}',
+        'qfmt': '{{EnglishPronunciationAudioFileName}}{{EnglishPhrase}}',
+        'afmt': '{{FrontSide}}<hr id="answer">{{CantonesePronunciationAudioFileName}}{{Characters}}<br/>{{Jyutping}}',
     },
 ]
 
@@ -86,18 +89,23 @@ def create_card_data_list(csv_file):
     with open(csv_file, 'r', encoding='utf-8') as file:
         csv_reader = csv.reader(file, delimiter=DELIMITER)
         for row in csv_reader:
-            phrase = row[0]
-            pronunciation_audio_file_name = row[1]
-            characters = row[2]
-            jyutping = row[3]
-            card_data_list.append(CardData(phrase=phrase, pronunciation_audio_file_name=pronunciation_audio_file_name, characters=characters, jyutping=jyutping))
+            english_phrase = row[0]
+            english_pronunciation_audio_file_name = row[1]
+            cantonese_pronunciation_audio_file_name = row[2]
+            characters = row[3]
+            jyutping = row[4]
+            card_data_list.append(CardData(english_phrase=english_phrase, english_pronunciation_audio_file_name=english_pronunciation_audio_file_name,
+                cantonese_pronunciation_audio_file_name=cantonese_pronunciation_audio_file_name, characters=characters, jyutping=jyutping))
     return card_data_list
 
 
 # Format audio files by appending sound: to format string
-def generate_audio_file_reference(card_data):
-    return '[sound:{}]'.format(card_data.pronunciation_audio_file_name)
+def generate_cantonese_audio_file_reference(card_data):
+    return '[sound:{}]'.format(card_data.cantonese_pronunciation_audio_file_name)
 
+# Format audio files by appending sound: to format string
+def generate_english_audio_file_reference(card_data):
+    return '[sound:{}]'.format(card_data.english_pronunciation_audio_file_name)
 
 # Given a list of CardData namedtuples, generate each card
 def create_notes(card_data_list):
@@ -105,7 +113,8 @@ def create_notes(card_data_list):
     for card_data in card_data_list:
         note = genanki.Note(
             model=anki_model,
-            fields=[card_data.phrase, generate_audio_file_reference(card_data), card_data.characters, card_data.jyutping]
+            fields=[card_data.english_phrase, generate_english_audio_file_reference(card_data),
+                generate_cantonese_audio_file_reference(card_data), card_data.characters, card_data.jyutping]
         )
         notes.append(note)
     return notes
@@ -128,7 +137,8 @@ def create_deck(csv_file, deck_name):
 
 # Define a function to include audio files with paths
 def gen_audio_files(card_data_list):
-  return list(map(lambda card_data: os.path.join(AUDIO_DIRECTORY, card_data.pronunciation_audio_file_name), card_data_list))
+  return list(map(lambda card_data: os.path.join(CANTONESE_AUDIO_DIRECTORY, card_data.cantonese_pronunciation_audio_file_name), card_data_list)) + \
+    list(map(lambda card_data: os.path.join(ENGLISH_AUDIO_DIRECTORY, card_data.english_pronunciation_audio_file_name), card_data_list))
 
 
 # Define the main function
