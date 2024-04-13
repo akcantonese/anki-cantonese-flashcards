@@ -2,13 +2,13 @@
 
 An Anki flashcard deck containing 32 basic Cantonese and English phrases with audio from [Cantonese Class 101: Key Cantonese Phrases/](https://www.cantoneseclass101.com/key-cantonese-phrases/). Features traditional Chinese characters, as well as Jyutping and Yale romanizations.
 
-[<img src="screenshots/20240412_CantoneseBasicPhrases-v1.0.0-Anki-23.12.1-1a1d4d54.png">](https://raw.githubusercontent.com/akcantonese/anki-cantonese-flashcards/main/screenshots/20240412_CantoneseBasicPhrases-v1.0.0-Anki-23.12.1-1a1d4d54.png)
+[<img src="screenshots/Latest_AnkiBasicCantonesePhrasesDeckPreview.png">](https://raw.githubusercontent.com/akcantonese/anki-cantonese-flashcards/main/screenshots/Latest_AnkiBasicCantonesePhrasesDeckPreview.png)
 
 # For Users
 
 1. [Download and install Anki](https://apps.ankiweb.net/#download), an offline flashcard app featuring spaced repetition, onto your device (free for Windows/Mac/Linux/Android, paid on iOS).
 
-2. Download the latest version of the .apkg deck from the Releases page.
+2. Download the latest version of the .apkg deck from the [Releases page](https://github.com/akcantonese/anki-cantonese-flashcards/releases).
 
 3. Open Anki and on the starting page, click "Import File", then select the .apkg file that you downloaded.
 
