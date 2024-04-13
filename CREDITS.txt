@@ -13,6 +13,7 @@
 * GNU/Linux Operating System: https://www.gnu.org/gnu/linux-and-gnu.en.html
 * MeldMerge visual comparison tool: https://meldmerge.org/
 * Natural Readers Text to Speech: https://www.naturalreaders.com
+* Narakeet Text to Speech: https://www.narakeet.com/
 * Python programming language: https://www.python.org/
 * Sans Forgetica font from RMIT: https://www.1001fonts.com/sans-forgetica-font.html
 * XFCE desktop environment: https://www.xfce.org/
